@@ -86,10 +86,14 @@ USER_HOME=$(getent passwd $USER_NAME | cut -d: -f6)
 assert_success
 assert_dir $USER_HOME
 
-# TODO: Download dotfiles.
 DOT_DIR="$USER_HOME/.dotfiles"
 CONF_DIR="$DOT_DIR/conf"
 BIN_DIR="$DOT_DIR/bin"
+if [[ ! -d $DOT_DIR ]]; then
+  echo "Installing dotfiles."
+  git clone --depth=1 https://github.com/JSybrandt/.dotfiles.git $DOT_DIR &> /dev/null
+  assert_success
+fi
 assert_dir $DOT_DIR
 assert_dir $CONF_DIR
 assert_dir $BIN_DIR
@@ -155,7 +159,7 @@ fi
 THEME_DIR=$ZSH/themes/powerlevel10k
 if [[ ! -d "$THEME_DIR" ]]; then
   echo "Installing Powerlevel10k."
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $THEME_DIR &>/dev/null
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $THEME_DIR &> /dev/null
   assert_success
 fi
 
