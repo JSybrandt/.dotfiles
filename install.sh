@@ -54,7 +54,8 @@ assert_in_path grep
 install_if_missing(){
   PKG=$1
   # Returns 0 if the package is missing
-  MISSING=$(dpkg-query -W -f='${Status}' "$PKG" 2>/dev/null | grep -c "ok installed")
+  MISSING=$(dpkg-query -W -f='${Status}' "$PKG" 2>/dev/null |
+            grep -c "ok installed")
   if [[ $MISSING -eq 0 ]]; then
     echo "Installing $PKG."
     apt install -y "$PKG" &> /dev/null
@@ -75,6 +76,22 @@ link_if_missing(){
   fi
 }
 
+# If $1 is not found in $2, append $1 to #2.
+add_command_to_file(){
+  COMMAND=$1
+  FILE=$2
+  if [[ ! -f $FILE ]]; then
+    echo "Creating $FILE."
+    touch $FILE
+  fi
+  # If the command is not present in profile.
+  if ! grep -q "$COMMAND" $FILE; then
+    echo "Adding '$COMMAND' to $FILE."
+    echo "" >> $FILE
+    echo $COMMAND >> $FILE
+  fi
+}
+
 ################################################################################
 # Config #######################################################################
 ################################################################################
@@ -91,7 +108,8 @@ CONF_DIR="$DOT_DIR/conf"
 BIN_DIR="$DOT_DIR/bin"
 if [[ ! -d $DOT_DIR ]]; then
   echo "Installing dotfiles."
-  sudo -u $USER_NAME git clone --depth=1 https://github.com/JSybrandt/.dotfiles.git $DOT_DIR &> /dev/null
+  sudo -u $USER_NAME git clone --depth=1 \
+    https://github.com/JSybrandt/.dotfiles.git $DOT_DIR &> /dev/null
   assert_success
 fi
 assert_dir $DOT_DIR
@@ -114,17 +132,10 @@ install_if_missing zsh
 # Make CAPSLOCK an extra Esc ###################################################
 ################################################################################
 
-PROFILE_PATH=$USER_HOME/.profile
 XKBMAP_COMMAND="setxkbmap -option caps:escape"
-if [[ ! -f $PROFILE_PATH ]]; then
-  touch $PROFILE_PATH
-fi
-# If the command is not present in profile.
-if ! grep -q "$XKBMAP_COMMAND" $PROFILE_PATH; then
-  echo "Adding '$XKBMAP_COMMAND' to $PROFILE_PATH."
-  echo "" >> $PROFILE_PATH
-  echo $XKBMAP_COMMAND >> $PROFILE_PATH
-fi
+add_command_to_file "$XKBMAP_COMMAND" $USER_HOME/.profile
+add_command_to_file "$XKBMAP_COMMAND" $USER_HOME/.xinitrc
+add_command_to_file "$XKBMAP_COMMAND" $USER_HOME/.Xresources
 
 ################################################################################
 # ZSH Config ###################################################################
@@ -159,7 +170,8 @@ fi
 THEME_DIR=$ZSH/themes/powerlevel10k
 if [[ ! -d "$THEME_DIR" ]]; then
   echo "Installing Powerlevel10k."
-  sudo -u $USER_NAME git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $THEME_DIR &> /dev/null
+  sudo -u $USER_NAME git clone --depth=1 \
+    https://github.com/romkatv/powerlevel10k.git $THEME_DIR &> /dev/null
   assert_success
 fi
 
@@ -187,7 +199,8 @@ TMUX_DOTFILE="$CONF_DIR/tmux"
 assert_file $TMUX_DOTFILE
 if [[ ! -d "$USER_HOME/.tmux" ]]; then
   echo "Installing Oh-My-Tmux."
-  sudo -u $USER_NAME git clone --depth=1 https://github.com/gpakosz/.tmux.git $USER_HOME/.tmux
+  sudo -u $USER_NAME git clone --depth=1 https://github.com/gpakosz/.tmux.git \
+    $USER_HOME/.tmux
   assert_success
 fi
 link_if_missing $USER_HOME/.tmux/.tmux.conf $USER_HOME/.tmux.conf
