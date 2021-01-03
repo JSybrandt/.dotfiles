@@ -164,14 +164,20 @@ if [[ ! -d "$THEME_DIR" ]]; then
 fi
 
 ################################################################################
-# Vim Config ###################################################################
+# Configure Vim ################################################################
 ################################################################################
 
-link_if_missing $CONF_DIR/vim $USER_HOME/.vim
-link_if_missing $CONF_DIR/vim/vimrc $USER_HOME/.vimrc
-# Download all vim plugins
-sudo -u $USER_NAME vim +PlugInstall +qall
-assert_success
+link_if_missing $CONF_DIR/vim $USER_HOME/.vimrc
+# Install plugged
+PLUG_INSTALL_FILE=$USER_HOME/.vim/autoload/plug.vim
+if [[ ! -f $PLUG_INSTALL_FILE ]]; then
+  echo "Installing vim-plug."
+  sudo -u $USER_NAME curl -sfLo $PLUG_INSTALL_FILE --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  # Install plugins
+  sudo -u $USER_NAME vim +PlugInstall +qall
+  assert_success
+fi
 
 ################################################################################
 # Configure Tmux ###############################################################

@@ -50,7 +50,7 @@ let g:airline_powerline_fonts = 1
 set number
 
 " Colorscheme (from vim-colorschemes)
-colorscheme night
+:silent! colorscheme night
 
 " Always use 2-space tab, especially in python
 set softtabstop=2 tabstop=2 shiftwidth=2 expandtab
