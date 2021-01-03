@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Exec=setxkbmap -option caps:escape
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=caps-to-bs
+Name=caps-to-bs
+Comment[en_US]=Edit the Option  as needed.
+Comment=
+

@@ -132,10 +132,19 @@ install_if_missing zsh
 # Make CAPSLOCK an extra Esc ###################################################
 ################################################################################
 
+# These files _sometimes_ work
 XKBMAP_COMMAND="setxkbmap -option caps:escape"
 add_command_to_file "$XKBMAP_COMMAND" $USER_HOME/.profile
 add_command_to_file "$XKBMAP_COMMAND" $USER_HOME/.xinitrc
 add_command_to_file "$XKBMAP_COMMAND" $USER_HOME/.Xresources
+# On Pop_OS, the autostart desktop file is what gets it.
+
+AUTOSTART_DIR=$USER_HOME/.config/autostart
+mkdir -p $AUTOSTART_DIR
+link_if_missing $CONF_DIR/caps_to_esc_autostart $AUTOSTART_DIR/caps_to_esc.desktop
+chmod +x $AUTOSTART_DIR/caps_to_esc.desktop
+assert_success
+
 
 ################################################################################
 # ZSH Config ###################################################################
