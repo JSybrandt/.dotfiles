@@ -1,0 +1,25 @@
+#!/bin/bash
+
+IP=$1
+
+if [[ -z "$IP" ]]; then
+  echo "Must supply IP"
+  exit 1
+fi
+
+echo "$IP" > ~/.palm_ip
+check-palmetto-loginvm
+
+# Start background process forever
+tmux kill-session -t _always_on_palmetto
+tmux new-session -d -s \
+  "_always_on_palmetto" \
+  "ssh -oStrictHostKeyChecking=no jsybran@$IP"
+
+
+# Mount remote dir
+# If mount broken
+if [[ -z "$(ls /home/jsybran/remote/palmetto)" ]]; then
+  sshfs $PALMETTO_LOGINVM_IP:/home/jsybran/remote/jcloud \
+        /home/jsybran/remote/palmetto
+fi

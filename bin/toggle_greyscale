@@ -1,0 +1,11 @@
+#!/bin/bash
+
+
+# Either the number "0 or the empty string"
+SETTING=$(nvidia-settings -q DigitalVibrance -t 2>/dev/null | grep 0 | head -1)
+if [[ $SETTING = "0" ]]; then
+  SETTING=-1024
+else
+  SETTING=0
+fi
+nvidia-settings -a DigitalVibrance=$SETTING &>/dev/null

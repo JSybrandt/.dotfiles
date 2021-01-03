@@ -1,0 +1,16 @@
+#!/bin/bash
+
+IP=$(cat ~/.palm_ip)
+
+if [[ -z "$IP" ]]; then
+  echo "Palmeto LoginVM not configured."
+  exit 1
+fi
+
+# Attempt to login
+ssh -o BatchMode=yes $IP true
+
+if [[ $? -ne 0 ]]; then
+  echo "Connection to $IP failed!"
+  exit 1
+fi

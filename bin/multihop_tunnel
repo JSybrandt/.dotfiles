@@ -1,0 +1,32 @@
+#!/bin/bash
+MSG="""
+  Usage:
+    ./multihop_tunnel <port> <hostname> ...
+
+  Forwards <port> from this node through each node in hostname in order.
+  Warning, each host[i] needs permission to access host[i+1]
+"""
+
+PORT=$1
+HOSTS=${@:2}
+
+if ! [[ $PORT =~ ^[0-9]+$ ]]; then
+  echo $MSG
+  echo "Error: \"$PORT\" is not a number"
+  exit 1
+fi
+
+if [[ -z "$HOSTS" ]]; then
+  echo $MSG
+  exit 1
+fi
+
+echo
+
+CMD=""
+for HOST in ${HOSTS[@]}; do
+  CMD="$CMD ssh -t $HOST -L $PORT:localhost:$PORT"
+done
+
+echo $CMD
+$CMD
