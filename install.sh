@@ -91,7 +91,7 @@ CONF_DIR="$DOT_DIR/conf"
 BIN_DIR="$DOT_DIR/bin"
 if [[ ! -d $DOT_DIR ]]; then
   echo "Installing dotfiles."
-  git clone --depth=1 https://github.com/JSybrandt/.dotfiles.git $DOT_DIR &> /dev/null
+  sudo -u $USER_NAME git clone --depth=1 https://github.com/JSybrandt/.dotfiles.git $DOT_DIR &> /dev/null
   assert_success
 fi
 assert_dir $DOT_DIR
@@ -159,7 +159,7 @@ fi
 THEME_DIR=$ZSH/themes/powerlevel10k
 if [[ ! -d "$THEME_DIR" ]]; then
   echo "Installing Powerlevel10k."
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $THEME_DIR &> /dev/null
+  sudo -u $USER_NAME git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $THEME_DIR &> /dev/null
   assert_success
 fi
 
@@ -181,7 +181,7 @@ TMUX_DOTFILE="$CONF_DIR/tmux"
 assert_file $TMUX_DOTFILE
 if [[ ! -d "$USER_HOME/.tmux" ]]; then
   echo "Installing Oh-My-Tmux."
-  git clone --depth=1 https://github.com/gpakosz/.tmux.git $USER_HOME/.tmux
+  sudo -u $USER_NAME git clone --depth=1 https://github.com/gpakosz/.tmux.git $USER_HOME/.tmux
   assert_success
 fi
 link_if_missing $USER_HOME/.tmux/.tmux.conf $USER_HOME/.tmux.conf
