@@ -70,7 +70,7 @@ function j {
 }
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-P10K_CONFIG=~/.dotfiles/zsh/p10k.zsh
+P10K_CONFIG=~/.dotfiles/conf/zsh_theme
 [[ ! -f $P10K_CONFIG ]] || source $P10K_CONFIG
 
 # >>> conda initialize >>>
