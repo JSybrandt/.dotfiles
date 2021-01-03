@@ -102,7 +102,6 @@ install_if_missing build-essential
 install_if_missing curl
 install_if_missing fonts-powerline
 install_if_missing git
-install_if_missing google-chrome-stable
 install_if_missing tmux
 install_if_missing vim-gtk
 install_if_missing zsh
