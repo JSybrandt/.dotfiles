@@ -144,7 +144,8 @@ add_command_to_file "$XKBMAP_COMMAND" $USER_HOME/.Xresources
 
 AUTOSTART_DIR=$USER_HOME/.config/autostart
 mkdir -p $AUTOSTART_DIR
-link_if_missing $CONF_DIR/caps_to_esc_autostart $AUTOSTART_DIR/caps_to_esc.desktop
+cp -f $CONF_DIR/caps_to_esc_autostart $AUTOSTART_DIR/caps_to_esc.desktop
+assert_success
 chmod +x $AUTOSTART_DIR/caps_to_esc.desktop
 assert_success
 
