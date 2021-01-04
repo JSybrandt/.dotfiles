@@ -124,6 +124,7 @@ install_if_missing build-essential
 install_if_missing curl
 install_if_missing fonts-powerline
 install_if_missing git
+install_if_missing htop
 install_if_missing python3
 install_if_missing python3-pip
 install_if_missing tmux
