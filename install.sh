@@ -76,6 +76,15 @@ link_if_missing(){
   fi
 }
 
+# If $1 doesn't exist, mkdir -p as $USER_NAME
+mkdir_if_missing(){
+  DIR=$1
+  if [[ ! -d $DIR ]]; then
+    echo "Creating $DIR"
+    sudo -u $USER_NAME mkdir -p $DIR
+  fi
+}
+
 # If $1 is not found in $2, append $1 to #2.
 add_command_to_file(){
   COMMAND=$1
@@ -124,6 +133,7 @@ install_if_missing build-essential
 install_if_missing curl
 install_if_missing fonts-powerline
 install_if_missing git
+install_if_missing gnome-tweaks
 install_if_missing htop
 install_if_missing python3
 install_if_missing python3-pip
@@ -143,10 +153,10 @@ add_command_to_file "$XKBMAP_COMMAND" $USER_HOME/.Xresources
 # On Pop_OS, the autostart desktop file is what gets it.
 
 AUTOSTART_DIR=$USER_HOME/.config/autostart
-mkdir -p $AUTOSTART_DIR
-cp -f $CONF_DIR/caps_to_esc_autostart $AUTOSTART_DIR/caps_to_esc.desktop
+mkdir_if_missing $AUTOSTART_DIR
+sudo -u $USER_NAME cp -f $CONF_DIR/caps_to_esc_autostart $AUTOSTART_DIR/caps_to_esc.desktop
 assert_success
-chmod +x $AUTOSTART_DIR/caps_to_esc.desktop
+sudo -u $USER_NAME chmod +x $AUTOSTART_DIR/caps_to_esc.desktop
 assert_success
 
 
@@ -166,7 +176,7 @@ fi
 link_if_missing $CONF_DIR/zsh $USER_HOME/.zshrc
 
 # Set marks dir for m and j commands.
-mkdir -p $USER_HOME/.marks
+mkdir_if_missing $USER_HOME/.marks
 
 # Install oh my zsh (exported env vars defined by Oh-My-Zsh api).
 export CHSH="no"
@@ -214,7 +224,8 @@ TMUX_DOTFILE="$CONF_DIR/tmux"
 assert_file $TMUX_DOTFILE
 if [[ ! -d "$USER_HOME/.tmux" ]]; then
   echo "Installing Oh-My-Tmux."
-  sudo -u $USER_NAME git clone --depth=1 https://github.com/gpakosz/.tmux.git \
+  sudo -u $USER_NAME \
+    git clone --depth=1 https://github.com/gpakosz/.tmux.git \
     $USER_HOME/.tmux
   assert_success
 fi
