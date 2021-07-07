@@ -132,7 +132,6 @@ assert_dir $BIN_DIR
 
 install_if_missing build-essential
 install_if_missing curl
-install_if_missing fonts-powerline
 install_if_missing git
 install_if_missing gnome-tweaks
 install_if_missing htop
@@ -232,6 +231,27 @@ if [[ ! -d "$USER_HOME/.tmux" ]]; then
 fi
 link_if_missing $USER_HOME/.tmux/.tmux.conf $USER_HOME/.tmux.conf
 link_if_missing $TMUX_DOTFILE $USER_HOME/.tmux.conf.local
+
+################################################################################
+## Install Powerline Fonts #####################################################
+################################################################################
+
+# If my favorite powerline font isn't installed.
+assert_in_path fc-list
+FONTS_INSTALLED=$(sudo -u $USER_NAME fc-list -q "Inconsolata\-dz for Powerline")
+if [[ "$FONTS_INSTALLED" -ne 0 ]]; then
+  FONT_INSTALL_DIR=$USER_HOME/.font_install
+  sudo -u $USER_NAME \
+    git clone --depth=1 https://github.com/powerline/fonts.git $FONT_INSTALL_DIR
+  assert_success
+  FONT_INSTALLER="$FONT_INSTALL_DIR/install.sh"
+  assert_file $FONT_INSTALLER
+  sudo -u $USER_NAME "$FONT_INSTALLER"
+  assert_success
+  rm -rf $FONT_INSTALL_DIR
+fi
+
+
 
 ################################################################################
 # Misc Simlinks ################################################################
