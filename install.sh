@@ -20,8 +20,9 @@ assert_sudo(){
 
 # Exits if the last command did not complete successfully.
 assert_success(){
-  if [[ $? -ne 0 ]]; then
-    log_fatal "Unexpected error in subprocess. Code: $?"
+  CODE=$?
+  if [[ "$CODE" -ne 0 ]]; then
+    log_fatal "Unexpected error in subprocess. Code: $CODE"
   fi
 }
 
@@ -178,14 +179,12 @@ link_if_missing $CONF_DIR/zsh $USER_HOME/.zshrc
 # Set marks dir for m and j commands.
 mkdir_if_missing $USER_HOME/.marks
 
-# Install oh my zsh (exported env vars defined by Oh-My-Zsh api).
-export CHSH="no"
-export RUNZSH="no"
-export KEEP_ZSHRC="yes"
 export ZSH=$USER_HOME/.oh-my-zsh
 if [[ ! -d $ZSH ]]; then
   echo "Installing Oh-My-Zsh."
-  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  sudo -u $USER_NAME bash -c \
+      "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
+      "" --keep-zshrc --unattended
   assert_success
 fi
 
@@ -193,12 +192,14 @@ fi
 THEME_DIR=$ZSH/themes/powerlevel10k
 if [[ ! -d "$THEME_DIR" ]]; then
   echo "Installing Powerlevel10k."
+  mkdir_if_missing $THEME_DIR
   sudo -u $USER_NAME git clone --depth=1 \
     https://github.com/romkatv/powerlevel10k.git $THEME_DIR &> /dev/null
   assert_success
 fi
 
 link_if_missing $CONF_DIR/zsh_theme $USER_HOME/.p10k.zsh
+link_if_missing $CONF_DIR/zsh $USER_HOME/.zshrc
 
 ################################################################################
 # Configure Vim ################################################################
