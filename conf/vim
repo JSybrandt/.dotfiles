@@ -11,9 +11,6 @@ Plug 'tpope/vim-sensible'
 " Tab completion for /
 Plug 'vim-scripts/SearchComplete'
 
-" More consistent colors across machines
-Plug 'flazz/vim-colorschemes'
-
 " Multi-cursor
 Plug 'terryma/vim-multiple-cursors'
 
@@ -39,21 +36,28 @@ Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
 " Better file swaps
 Plug 'christoomey/vim-tmux-navigator'
 
-" Godot syntax highlighting
-Plug 'calviken/vim-gdscript3'
+" Godot support / syntax
+Plug 'habamax/vim-godot'
+
+" The best colorscheme
+Plug 'sheerun/vim-polyglot'
+Plug 'pineapplegiant/spaceduck', { 'branch': 'main' }
 
 call plug#end()
 
 " Call :PlugInstall, :PlugUpdate, or :PlugClean
 
-" Enable powerline symbols in airline
-let g:airline_powerline_fonts = 1
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
+colorscheme spaceduck
+let g:airline_theme = 'spaceduck'
 
 " Number lines
 set number
-
-" Colorscheme (from vim-colorschemes)
-:silent! colorscheme night
 
 " Always use 2-space tab, especially in python
 set softtabstop=2 tabstop=2 shiftwidth=2 expandtab
@@ -114,3 +118,5 @@ set guioptions -=m  " Remove menu
 set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 12  " Font and size
 set vb t_vb=  " turn off that annoying beep!
 
+" Helps editing in Godot easier.
+let g:godot_executable="godot3"
