@@ -259,4 +259,5 @@ fi
 
 link_if_missing $BIN_DIR $USER_HOME/.bin
 link_if_missing $CONF_DIR/latexmk $USER_HOME/.latexmkrc
+link_if_missing $CONF_DIR/conda $USER_HOME/.condarc
 mkdir_if_missing $USER_HOME/Projects
