@@ -39,6 +39,9 @@ Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
 " Better file swaps
 Plug 'christoomey/vim-tmux-navigator'
 
+" Godot syntax highlighting
+Plug 'calviken/vim-gdscript3'
+
 call plug#end()
 
 " Call :PlugInstall, :PlugUpdate, or :PlugClean
@@ -104,4 +107,10 @@ cabbrev vb vert belowright sb
 
 " For ipython integration, use tmux
 let g:slime_target = "vimterminal"
+
+" These options are only useful for when gvim launches vim in a gnome window.
+set guioptions -=T  " Remove top bar
+set guioptions -=m  " Remove menu
+set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 12  " Font and size
+set vb t_vb=  " turn off that annoying beep!
 
