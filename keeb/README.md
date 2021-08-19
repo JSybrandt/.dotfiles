@@ -1,6 +1,7 @@
 # Keeb
 
-This part of my dotfiles is setup for me to manage the firmware of my launch
-keyboard. I'll need to work with the System76 fork of QMK.
+This contains some files I use to manage my keyboard, like a backup of my sys76
+layout export.
 
-Take a look at [this link](https://github.com/system76/qmk_firmware/tree/master/keyboards/system76/launch_1/).
+To get into the _deep shit_ you'll need to take a look at:
+https://github.com/JSybrandt/qmk_firmware/tree/jsybrandt
