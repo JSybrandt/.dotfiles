@@ -176,9 +176,6 @@ if [[ $CURRENT_SHELL != $ZSH_PATH ]]; then
 fi
 link_if_missing $CONF_DIR/zsh $USER_HOME/.zshrc
 
-# Set marks dir for m and j commands.
-mkdir_if_missing $USER_HOME/.marks
-
 export ZSH=$USER_HOME/.oh-my-zsh
 if [[ ! -d $ZSH ]]; then
   echo "Installing Oh-My-Zsh."

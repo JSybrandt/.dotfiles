@@ -7,6 +7,10 @@ zplug "jeffreytse/zsh-vi-mode"
 # Powerlevel theme
 zplug romkatv/powerlevel10k, as:theme, depth:1
 
+# Bookmarks
+zplug "jocelynmallon/zshmarks"
+
+
 # zplug check returns true if all packages are installed
 # Therefore, when it returns false, run zplug install
 if ! zplug check; then
@@ -33,33 +37,6 @@ export EDITOR="vim"
 # Path Changes
 export PATH=$PATH:~/.bin
 export PATH=$PATH:~/.local/bin
-
-# Mark function
-function m {
-  mark=$1
-  if [[ -z $mark ]]; then
-    mark=".default"
-  fi
-  mark_file=~/.marks/$mark
-  echo "$PWD" > $mark_file
-}
-
-# Jump function
-function j {
-  mark=$1
-  if [[ -z $mark ]]; then
-    mark=".default"
-  fi
-  mark_file=~/.marks/$mark
-  if [[ -f ~/.marks/$mark ]]; then
-    cd $(cat $mark_file)
-  elif [[ -d $mark_file ]]; then
-    # I got lazy and just typed j instead of cd
-    cd $mark
-  else
-    echo "$mark not set"
-  fi
-}
 
 alias blaze="bazel"
 
