@@ -29,15 +29,8 @@ Plug 'justinmk/vim-syntax-extra'
 " Airline, I couldn't stay away.
 Plug 'vim-airline/vim-airline'
 
-" Interopt with python
-Plug 'jpalardy/vim-slime', { 'for': 'python' }
-Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
-
 " Better file swaps
 Plug 'christoomey/vim-tmux-navigator'
-
-" Godot support / syntax
-Plug 'habamax/vim-godot'
 
 " The best colorscheme
 Plug 'sheerun/vim-polyglot'
