@@ -13,6 +13,9 @@ zplug "jocelynmallon/zshmarks"
 # Syntax highlighting
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 
+# Suggestions
+zplug zsh-users/zsh-autosuggestions
+
 # zplug check returns true if all packages are installed
 # Therefore, when it returns false, run zplug install
 if ! zplug check; then
@@ -41,9 +44,6 @@ export PATH=$PATH:~/.bin
 export PATH=$PATH:~/.local/bin
 
 alias blaze="bazel"
-
-bindkey "^[[A" history-beginning-search-backward
-bindkey "^[[B" history-beginning-search-forward
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
