@@ -135,6 +135,7 @@ install_if_missing curl
 install_if_missing git
 install_if_missing gnome-tweaks
 install_if_missing htop
+install_if_missing nnn
 install_if_missing python3
 install_if_missing python3-pip
 install_if_missing tmux
@@ -187,13 +188,12 @@ if [[ ! -d $ZSH ]]; then
   assert_success
 fi
 
-# Install Powerlevel10k Theme
-THEME_DIR=$ZSH/themes/powerlevel10k
-if [[ ! -d "$THEME_DIR" ]]; then
-  echo "Installing Powerlevel10k."
-  mkdir_if_missing $THEME_DIR
-  sudo -u $USER_NAME git clone --depth=1 \
-    https://github.com/romkatv/powerlevel10k.git $THEME_DIR &> /dev/null
+
+# Install zplug plugin manager.
+if [[ ! -d "$USER_HOME/.zplug" ]]; then
+  echo "Installing zplug."
+  sudo -u $USER_NAME bash -c \
+    "curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh" &> /dev/null
   assert_success
 fi
 

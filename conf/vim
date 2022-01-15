@@ -43,6 +43,9 @@ Plug 'habamax/vim-godot'
 Plug 'sheerun/vim-polyglot'
 Plug 'pineapplegiant/spaceduck', { 'branch': 'main' }
 
+" NNN File manager
+Plug 'mcchrish/nnn.vim'
+
 call plug#end()
 
 " Call :PlugInstall, :PlugUpdate, or :PlugClean
@@ -120,3 +123,15 @@ set vb t_vb=  " turn off that annoying beep!
 
 " Helps editing in Godot easier.
 let g:godot_executable="godot3"
+
+" Type to nav
+let g:nnn#command = 'nnn -n'
+" Disable default mappings
+let g:nnn#set_default_mappings = 0
+" Start n³ in the current file's directory
+nnoremap <leader>n :NnnPicker %:p:h<CR>
+let g:nnn#layout = 'tabnew' " or vnew, tabnew etc.
+let g:nnn#action = {
+      \ '<c-t>': 'tab split'}
+
+
