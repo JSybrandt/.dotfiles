@@ -1,20 +1,11 @@
 # Plugins
 source ~/.zplug/init.zsh
 
-# Fancier vim mode.
-zplug "jeffreytse/zsh-vi-mode"
-
-# Powerlevel theme
-zplug romkatv/powerlevel10k, as:theme, depth:1
-
-# Bookmarks
+zplug "romkatv/powerlevel10k", as:theme, depth:1
 zplug "jocelynmallon/zshmarks"
-
-# Syntax highlighting
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
-
-# Suggestions
-zplug zsh-users/zsh-autosuggestions
+zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-autosuggestions"
 
 # zplug check returns true if all packages are installed
 # Therefore, when it returns false, run zplug install
@@ -24,6 +15,7 @@ fi
 
 # source plugins and add commands to the PATH
 zplug load
+
 
 export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
