@@ -35,8 +35,6 @@ export EDITOR="vim"
 export PATH=$PATH:~/.bin
 export PATH=$PATH:~/.local/bin
 
-alias blaze="bazel"
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/jsybrandt/anaconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
