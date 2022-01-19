@@ -1,9 +1,22 @@
 set term=screen-256color
+set nocompatible
+filetype plugin on
+syntax on
+set notermguicolors
+
+try
+  source ~/.dotfiles/private/vim
+catch
+  " No private dotfiles
+endtry
 
 " Plugins
 call plug#begin('~/.vim/plugged')
 
 " List plugins here
+
+" More consistent colors across machines
+Plug 'flazz/vim-colorschemes'
 
 " Sensible defaults
 Plug 'tpope/vim-sensible'
@@ -29,6 +42,9 @@ Plug 'justinmk/vim-syntax-extra'
 " Airline, I couldn't stay away.
 Plug 'vim-airline/vim-airline'
 
+" Latex math symbols. Must appear before vim-tmux-nav
+Plug 'joom/latex-unicoder.vim'
+
 " Better file swaps
 Plug 'christoomey/vim-tmux-navigator'
 
@@ -36,24 +52,45 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'sheerun/vim-polyglot'
 Plug 'pineapplegiant/spaceduck', { 'branch': 'main' }
 
+" Comment with power
+Plug 'preservim/nerdcommenter'
+
 " NNN File manager
 Plug 'mcchrish/nnn.vim'
+
+" Better c++ vim hilighting
+Plug 'octol/vim-cpp-enhanced-highlight'
+
+" Better spellcheck, including camel case
+Plug 'kamykn/spelunker.vim'
+
+" Personal wiki
+Plug 'vimwiki/vimwiki'
+
+" Enables extra language servers.
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 call plug#end()
 
 " Call :PlugInstall, :PlugUpdate, or :PlugClean
 
-if exists('+termguicolors')
-  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  set termguicolors
-endif
 
+" COLORS AND THEMES
+"if exists('+termguicolors')
+  "let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  "let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  "set termguicolors
+"endif
 colorscheme spaceduck
 let g:airline_theme = 'spaceduck'
+" I hate the default comment color. Set to 'Purple 2'
+hi Comment ctermfg=60 guifg=#686f9a
 
 " Number lines
-set number
+:set number relativenumber
+:set nu rnu
 
 " Always use 2-space tab, especially in python
 set softtabstop=2 tabstop=2 shiftwidth=2 expandtab
@@ -65,6 +102,7 @@ nnoremap <leader>s :set spell!<cr>
 " Better spellcheck coloring
 hi clear SpellBad
 hi SpellBad term=undercurl cterm=undercurl ctermfg=9
+set nospell
 
 "human readable linebreak
 set linebreak
@@ -88,9 +126,21 @@ au BufRead,BufNewFile *.md  setlocal textwidth=80
 au BufRead,BufNewFile *.tex setlocal textwidth=80
 
 " Automatically word wrap overflowed line
-nmap <leader>r vipgq
+nmap <leader>w vipgq
+
+" Want to know when tab is typed
+set list
+set listchars=tab:>-
 
 set completeopt-=preview
+
+" Turn off gross default highlighting
+:hi clear TODO
+:hi clear FIXME
+:hi clear XXX
+:hi link TODO Comment
+:hi link FIXME Comment
+:hi link XXX Comment
 
 " disable some features for increased latex performance
 au FileType tex setlocal nocursorline
@@ -114,9 +164,6 @@ set guioptions -=m  " Remove menu
 set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 12  " Font and size
 set vb t_vb=  " turn off that annoying beep!
 
-" Helps editing in Godot easier.
-let g:godot_executable="godot3"
-
 " Type to nav
 let g:nnn#command = 'nnn -n'
 " Disable default mappings
@@ -128,3 +175,28 @@ let g:nnn#action = {
       \ '<c-t>': 'tab split'}
 
 
+" Type latex in such a way that it doesn't interfere with switching panes
+let g:unicoder_cancel_normal = 1
+let g:unicoder_cancel_insert = 1
+let g:unicoder_cancel_visual = 1
+nnoremap <C-u> :call unicoder#start(0)<CR>
+inoremap <C-u> <Esc>:call unicoder#start(1)<CR>
+vnoremap <C-u> :<C-u>call unicoder#selection()<CR>
+
+" Rebind increment so it plays nice with tmux and 10-digit numbers.
+:set nrformats+=alpha
+" Use ctrl-[i]ncr and ctrl-[d]ecr
+:nnoremap <C-i> <C-a>
+:nnoremap <C-d> <C-x>
+
+" Command aliases make it easier to not mess up
+fun! SetupCommandAlias(from, to)
+  exec 'cnoreabbrev <expr> '.a:from
+          \ .' ((getcmdtype() is# ":" && getcmdline() is# "'.a:from.'")'
+          \ .'? ("'.a:to.'") : ("'.a:from.'"))'
+endfun
+call SetupCommandAlias("W","w")
+call SetupCommandAlias("Q","q")
+call SetupCommandAlias("E","e")
+call SetupCommandAlias("WQ","wq")
+call SetupCommandAlias("Wq","wq")
