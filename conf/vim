@@ -14,6 +14,8 @@ endtry
 call plug#begin('~/.vim/plugged')
 
 " List plugins here
+" Better tab completion
+" Plug 'ervandew/supertab'
 
 " More consistent colors across machines
 Plug 'flazz/vim-colorschemes'
@@ -30,8 +32,6 @@ Plug 'terryma/vim-multiple-cursors'
 " Comment multiple lines is \c
 Plug 'preservim/nerdcommenter'
 
-" Better tab completion
-Plug 'ervandew/supertab'
 
 " Highlight trailing whitespace
 Plug 'ntpeters/vim-better-whitespace'
