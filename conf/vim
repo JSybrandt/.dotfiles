@@ -200,3 +200,6 @@ call SetupCommandAlias("Q","q")
 call SetupCommandAlias("E","e")
 call SetupCommandAlias("WQ","wq")
 call SetupCommandAlias("Wq","wq")
+
+" Allow hidden buffers to have changes.
+set hidden
