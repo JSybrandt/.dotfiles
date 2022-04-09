@@ -177,20 +177,21 @@ fi
 link_if_missing $CONF_DIR/zsh $USER_HOME/.zshrc
 
 export ZSH=$USER_HOME/.oh-my-zsh
+ZSH_LINK="https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
 if [[ ! -d $ZSH ]]; then
   echo "Installing Oh-My-Zsh."
   sudo -u $USER_NAME bash -c \
-      "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" \
-      "" --keep-zshrc --unattended
+      "$(curl -fsSL $ZSH_LINK)" "" --keep-zshrc --unattended
   assert_success
 fi
 
 
 # Install zplug plugin manager.
+ZPLUG_LINK="https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh"
 if [[ ! -d "$USER_HOME/.zplug" ]]; then
   echo "Installing zplug."
   sudo -u $USER_NAME bash -c \
-    "curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh" &> /dev/null
+    "curl -sL --proto-redir -all,$ZPLUG_LINK | zsh" &> /dev/null
   assert_success
 fi
 
@@ -204,10 +205,10 @@ link_if_missing $CONF_DIR/zsh $USER_HOME/.zshrc
 link_if_missing $CONF_DIR/vim $USER_HOME/.vimrc
 # Install plugged
 PLUG_INSTALL_FILE=$USER_HOME/.vim/autoload/plug.vim
+PLUG_LINK="https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 if [[ ! -f $PLUG_INSTALL_FILE ]]; then
   echo "Installing vim-plug."
-  sudo -u $USER_NAME curl -sfLo $PLUG_INSTALL_FILE --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  sudo -u $USER_NAME curl -sfLo $PLUG_INSTALL_FILE --create-dirs $PLUG_LINK
   # Install plugins
   sudo -u $USER_NAME vim +PlugInstall +qall
   assert_success
@@ -248,7 +249,19 @@ if [[ "$FONTS_INSTALLED" -ne 0 ]]; then
   rm -rf $FONT_INSTALL_DIR
 fi
 
+################################################################################
+## Install Poetry ##############################################################
+################################################################################
 
+
+POETRY_LINK="https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py"
+POETRY="$USER_HOME/.poetry/bin/poetry"
+if [[ ! -f "$POETRY" ]]; then
+  echo "Installing Poetry."
+  sudo -u $USER_NAME bash -c \
+    "curl -sSL $POETRY_LINK | python3 -" &> /dev/null
+  assert_success
+fi
 
 ################################################################################
 # Misc #########################################################################
