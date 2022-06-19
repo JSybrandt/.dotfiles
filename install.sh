@@ -138,6 +138,7 @@ install_if_missing htop
 install_if_missing nnn
 install_if_missing python3
 install_if_missing python3-pip
+install_if_missing solaar
 install_if_missing tmux
 install_if_missing vim-gtk
 install_if_missing zsh
