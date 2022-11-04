@@ -207,3 +207,8 @@ call SetupCommandAlias("Wq","wq")
 
 " Allow hidden buffers to have changes.
 set hidden
+
+" A quick macro to switch between the header/body/test of a cc library.
+:command CCHeader :e %:r.h
+:command CCBody :e %:r.cc
+:command CCTest :e %:r_test.cc
