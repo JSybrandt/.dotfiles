@@ -1,4 +1,6 @@
-set term=screen-256color
+if !has('nvim')
+  set term=screen-256color
+endif
 set nocompatible
 filetype plugin on
 syntax on
@@ -101,7 +103,6 @@ autocmd FileType python set softtabstop=2 tabstop=2 shiftwidth=2 expandtab
 
 " Spellcheck
 set spell spelllang=en_us
-nnoremap <leader>s :set spell!<cr>
 " Better spellcheck coloring
 hi clear SpellBad
 hi SpellBad term=undercurl cterm=undercurl ctermfg=9
@@ -161,9 +162,11 @@ cabbrev vb vert belowright sb
 " For ipython integration, use tmux
 let g:slime_target = "vimterminal"
 
-" These options are only useful for when gvim launches vim in a gnome window.
-set guioptions -=T  " Remove top bar
-set guioptions -=m  " Remove menu
+if !has('nvim')
+  " These options are only useful for when gvim launches vim in a gnome window.
+  set guioptions -=T  " Remove top bar
+  set guioptions -=m  " Remove menu
+endif
 set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 12  " Font and size
 set vb t_vb=  " turn off that annoying beep!
 
