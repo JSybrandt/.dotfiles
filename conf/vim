@@ -211,8 +211,5 @@ set hidden
 :command CCHeader :e %:r.h
 :command CCBody :e %:r.cc
 :command CCTest :e %:r_test.cc
-<<<<<<< HEAD
 
 autocmd FileType python set indenexpr = 0
-=======
->>>>>>> e22433a (Deletes a bunch of nvim stuff.)
