@@ -1,21 +1,21 @@
+try
+  source ~/.dotfiles/private/vim_pre
+catch
+  " No private pre-load dotfiles present.
+endtry
+
 set term=screen-256color
 set nocompatible
 filetype plugin on
 syntax on
 set notermguicolors
 
-try
-  source ~/.dotfiles/private/vim
-catch
-  " No private dotfiles
-endtry
+" Must be set before ALE is loaded.
+let g:ale_completion_enabled = 1
+
 
 " Plugins
 call plug#begin('~/.vim/plugged')
-
-" List plugins here
-" Better tab completion
-" Plug 'ervandew/supertab'
 
 " More consistent colors across machines
 Plug 'flazz/vim-colorschemes'
@@ -32,7 +32,6 @@ Plug 'terryma/vim-multiple-cursors'
 " Comment multiple lines is \c
 Plug 'preservim/nerdcommenter'
 
-
 " Highlight trailing whitespace
 Plug 'ntpeters/vim-better-whitespace'
 
@@ -42,9 +41,6 @@ Plug 'justinmk/vim-syntax-extra'
 " Airline, I couldn't stay away.
 Plug 'vim-airline/vim-airline'
 
-" Latex math symbols. Must appear before vim-tmux-nav
-Plug 'joom/latex-unicoder.vim'
-
 " Better file swaps
 Plug 'christoomey/vim-tmux-navigator'
 
@@ -52,28 +48,20 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'sheerun/vim-polyglot'
 Plug 'pineapplegiant/spaceduck', { 'branch': 'main' }
 
-" Comment with power
-Plug 'preservim/nerdcommenter'
-
 " NNN File manager
 Plug 'mcchrish/nnn.vim'
 
-" Better c++ vim hilighting
+" Better c++ vim highlighting
 Plug 'octol/vim-cpp-enhanced-highlight'
 
 " Better spellcheck, including camel case
 Plug 'kamykn/spelunker.vim'
 
-" Personal wiki
-Plug 'vimwiki/vimwiki'
-
-" Enables extra language servers.
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-
 " Make it easier to navigate hidden buffers.
  Plug 'jlanzarotta/bufexplorer'
+
+" Linting and compiler warnings.
+Plug 'dense-analysis/ale'
 
 call plug#end()
 
@@ -213,3 +201,31 @@ set hidden
 :command CCTest :e %:r_test.cc
 
 autocmd FileType python set indenexpr = 0
+
+set ballooneval
+set balloonevalterm
+
+" ALE options.
+let g:ale_lint_on_save = 1
+let g:ale_detail_to_floating_preview = 1
+let g:ale_set_balloons = 1
+let g:ale_floating_preview = 1
+let g:ale_hover_to_floating_preview = 1
+
+nnoremap <silent> <Leader>ar <Cmd>ALEFindReferences<CR>
+nnoremap <silent> <Leader>aR <Cmd>ALERename<CR>
+nnoremap <silent> <Leader>aF <Cmd>ALEFileRename<CR>
+nnoremap <silent> <Leader>ad <Cmd>ALEGoToDefinition<CR>
+nnoremap <silent> <Leader>aD <Cmd>ALEGoToImplementation<CR>
+nnoremap <silent> <Leader>ai <Cmd>ALEImport<CR>
+nnoremap <silent> <Leader>af <Cmd>ALEFix<CR>
+nnoremap <silent> <Leader>ah <Cmd>ALEHover<CR>
+nnoremap <silent> <Leader>ae <Cmd>ALEDetail<CR>
+nnoremap <silent> <Leader>ae <Cmd>ALEDetail<CR>
+
+
+try
+  source ~/.dotfiles/private/vim_post
+catch
+  " No private pre-load dotfiles present.
+endtry
