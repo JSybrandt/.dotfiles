@@ -244,3 +244,7 @@ try
 catch
   " No private pre-load dotfiles present.
 endtry
+
+" Enable project specific vimrc files.
+set exrc
+set secure
