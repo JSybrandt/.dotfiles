@@ -25,7 +25,7 @@ Plug 'tpope/vim-sensible'
 Plug 'vim-scripts/SearchComplete'
 
 " Multi-cursor
-Plug 'terryma/vim-multiple-cursors'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 
 " Comment multiple lines is \c
 Plug 'preservim/nerdcommenter'
