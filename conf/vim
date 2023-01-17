@@ -148,9 +148,6 @@ set listchars=tab:>-
 " Open window to a buffer in the right vertical pane
 cabbrev vb vert belowright sb
 
-" For ipython integration, use tmux
-let g:slime_target = "vimterminal"
-
 " These options are only useful for when gvim launches vim in a gnome window.
 set guioptions -=T  " Remove top bar
 set guioptions -=m  " Remove menu
@@ -202,8 +199,6 @@ set hidden
 :command CCHeader :e %:r.h
 :command CCBody :e %:r.cc
 :command CCTest :e %:r_test.cc
-
-autocmd FileType python set indenexpr = 0
 
 " ALE options.
 let g:ale_lint_on_save = 1
