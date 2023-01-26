@@ -166,14 +166,6 @@ let g:nnn#action = {
       \ '<c-t>': 'tab split'}
 
 
-" Type latex in such a way that it doesn't interfere with switching panes
-let g:unicoder_cancel_normal = 1
-let g:unicoder_cancel_insert = 1
-let g:unicoder_cancel_visual = 1
-nnoremap <C-u> :call unicoder#start(0)<CR>
-inoremap <C-u> <Esc>:call unicoder#start(1)<CR>
-vnoremap <C-u> :<C-u>call unicoder#selection()<CR>
-
 " Rebind increment so it plays nice with tmux and 10-digit numbers.
 :set nrformats+=alpha
 " Use ctrl-[i]ncr and ctrl-[d]ecr
@@ -206,6 +198,7 @@ let g:ale_detail_to_floating_preview = 1
 let g:ale_set_balloons = 1
 let g:ale_floating_preview = 1
 let g:ale_hover_to_floating_preview = 1
+let g:ale_virtualtext_cursor = 'disabled'
 
 nnoremap <silent> <Leader>ar <Cmd>ALEFindReferences<CR>
 nnoremap <silent> <Leader>aR <Cmd>ALERename<CR>
@@ -216,7 +209,10 @@ nnoremap <silent> <Leader>ai <Cmd>ALEImport<CR>
 nnoremap <silent> <Leader>af <Cmd>ALEFix<CR>
 nnoremap <silent> <Leader>ah <Cmd>ALEHover<CR>
 nnoremap <silent> <Leader>ae <Cmd>ALEDetail<CR>
-nnoremap <silent> <Leader>an <Cmd>ALENext<CR>
+nnoremap <silent> <Leader>an <Cmd>ALENextWrap<CR>
+
+nmap <silent> <C-PageUp> <Cmd>ALEPrevWrap<CR>
+nmap <silent> <C-PageDown> <Cmd>ALENextWrap<CR>
 
 " Use <TAB> to cycle thru autocomplete suggestions.
 inoremap <silent><expr> <Tab>
