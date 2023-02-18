@@ -58,3 +58,5 @@ unset __conda_setup
 export PATH="$HOME/.poetry/bin:$PATH"
 
 alias weather="curl wttr.in/Frederick"
+# Zsh autocomplete.
+autoload -U compinit; compinit

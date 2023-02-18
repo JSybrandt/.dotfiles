@@ -194,11 +194,13 @@ set hidden
 
 " ALE options.
 let g:ale_lint_on_save = 1
+let g:ale_fix_on_save = 1
 let g:ale_detail_to_floating_preview = 1
 let g:ale_set_balloons = 1
 let g:ale_floating_preview = 1
 let g:ale_hover_to_floating_preview = 1
 let g:ale_virtualtext_cursor = 'disabled'
+let g:ale_python_auto_poetry = 1
 
 nnoremap <silent> <Leader>ar <Cmd>ALEFindReferences<CR>
 nnoremap <silent> <Leader>aR <Cmd>ALERename<CR>
