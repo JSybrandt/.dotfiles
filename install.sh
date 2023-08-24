@@ -131,6 +131,7 @@ assert_dir $BIN_DIR
 ################################################################################
 
 install_if_missing build-essential
+install_if_missing cargo
 install_if_missing curl
 install_if_missing git
 install_if_missing gnome-tweaks

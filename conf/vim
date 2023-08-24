@@ -65,6 +65,7 @@ Plug 'dense-analysis/ale'
 " Fuzzy file matcher.
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
+
 call plug#end()
 
 " Call :PlugInstall, :PlugUpdate, or :PlugClean

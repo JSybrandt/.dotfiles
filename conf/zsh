@@ -55,8 +55,10 @@ unset __conda_setup
 # <<< conda initialize <<<
 
 
-export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="$HOME/.poetry/bin:$HOME/.cargo/bin:$PATH"
 
 alias weather="curl wttr.in/Frederick"
 # Zsh autocomplete.
 autoload -U compinit; compinit
+# Sometimes I fuck up mercurial.
+alias gh="hg"
