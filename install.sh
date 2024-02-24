@@ -141,7 +141,7 @@ install_if_missing python3
 install_if_missing python3-pip
 install_if_missing solaar
 install_if_missing tmux
-install_if_missing vim-gtk
+install_if_missing vim-gtk3
 install_if_missing zsh
 
 ################################################################################
@@ -249,20 +249,6 @@ if [[ "$FONTS_INSTALLED" -ne 0 ]]; then
   sudo -u $USER_NAME "$FONT_INSTALLER"
   assert_success
   rm -rf $FONT_INSTALL_DIR
-fi
-
-################################################################################
-## Install Poetry ##############################################################
-################################################################################
-
-
-POETRY_LINK="https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py"
-POETRY="$USER_HOME/.poetry/bin/poetry"
-if [[ ! -f "$POETRY" ]]; then
-  echo "Installing Poetry."
-  sudo -u $USER_NAME bash -c \
-    "curl -sSL $POETRY_LINK | python3 -" &> /dev/null
-  assert_success
 fi
 
 ################################################################################
