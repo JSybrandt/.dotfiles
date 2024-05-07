@@ -65,6 +65,8 @@ Plug 'dense-analysis/ale'
 " Fuzzy file matcher.
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
+" Shows file tags in a nifty sidebar.
+Plug 'preservim/tagbar'
 
 call plug#end()
 
@@ -228,7 +230,9 @@ highlight ALEErrorSign ctermbg=NONE ctermfg=red
 highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
 " Don't leave annoying grey column on left.
 highlight clear SignColumn
-
+" \h to hover on a symbol.
+nnoremap <silent> <Leader>h <Cmd>ALEHover<CR>
+nnoremap <silent> <Leader>d <Cmd>ALEDetail<CR>
 
 " FZF Fuzzy Finder.
 nnoremap <silent> <Leader>f <Cmd>FZF<CR>
@@ -245,3 +249,11 @@ set secure
 
 let g:ale_linters = {'rust': ['analyzer']}
 let g:ale_fixers = {'rust': ['rustfmt']}
+
+" Enable folding by indent level by default.
+set foldmethod=indent
+" Disable folding until the first fold is made.
+set nofoldenable
+
+
+nnoremap <silent> <Leader>tt <Cmd>TagbarToggle<CR>
