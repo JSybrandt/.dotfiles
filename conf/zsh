@@ -57,6 +57,8 @@ unset __conda_setup
 
 export PATH="$HOME/.poetry/bin:$HOME/.cargo/bin:$PATH"
 
-alias weather="curl wttr.in/Frederick"
+alias weather="curl wttr.in/Rockville"
 # Zsh autocomplete.
 autoload -U compinit; compinit
+# Sometimes I fuck up mercurial.
+alias gh="hg"

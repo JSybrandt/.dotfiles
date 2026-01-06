@@ -62,6 +62,11 @@ Plug 'kamykn/spelunker.vim'
 " Linting and compiler warnings.
 Plug 'dense-analysis/ale'
 
+" Better autocomplete with ale.
+" Plug 'Shougo/deoplete.nvim'
+" Plug 'roxma/nvim-yarp'
+" Plug 'roxma/vim-hug-neovim-rpc'
+
 " Fuzzy file matcher.
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
@@ -195,6 +200,9 @@ set hidden
 :command CCBody :e %:r.cc
 :command CCTest :e %:r_test.cc
 
+" Use deoplete for completion.
+let g:deoplete#enable_at_startup = 1
+
 " ALE options.
 let g:ale_lint_on_save = 1
 let g:ale_fix_on_save = 1
@@ -203,7 +211,7 @@ let g:ale_set_balloons = 1
 let g:ale_floating_preview = 1
 let g:ale_hover_to_floating_preview = 1
 let g:ale_virtualtext_cursor = 'disabled'
-let g:ale_python_auto_poetry = 1
+" let g:ale_python_auto_poetry = 1
 
 nnoremap <silent> <Leader>ar <Cmd>ALEFindReferences<CR>
 nnoremap <silent> <Leader>aR <Cmd>ALERename<CR>
@@ -247,8 +255,9 @@ endtry
 set exrc
 set secure
 
-let g:ale_linters = {'rust': ['analyzer']}
-let g:ale_fixers = {'rust': ['rustfmt']}
+" let g:ale_linters = {'rust': ['analyzer']}
+" let g:ale_fixers = {'rust': ['rustfmt']}
+
 
 " Enable folding by indent level by default.
 set foldmethod=indent
@@ -257,3 +266,8 @@ set nofoldenable
 
 
 nnoremap <silent> <Leader>tt <Cmd>TagbarToggle<CR>
+
+" If a file is changed by an external program reload instantly.
+set autoread
+au FocusGained,BufEnter * :checktime
+au CursorHold * checktime
