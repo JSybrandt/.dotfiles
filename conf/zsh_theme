@@ -31,9 +31,11 @@
   # The list of segments shown on the left. Fill it with the most important segments.
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
     # os_icon               # os identifier
+    citc
     dir                     # current directory
     vcs                     # git status
     # prompt_char           # prompt symbol
+    gcert_bad
   )
 
   # The list of segments shown on the right. Fill it with less important segments.
@@ -92,7 +94,7 @@
     todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
     timewarrior             # timewarrior tracking status (https://timewarrior.net/)
     taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
-    gcert
+    gcert_good
     time                    # current time
     # ip                    # ip address and bandwidth usage for a specified network interface
     # public_ip             # public IP address
@@ -1561,15 +1563,30 @@
   # typeset -g POWERLEVEL9K_TIME_PREFIX='at '
 
   ###########################[ gcert: gcert status ]############################
-  POWERLEVEL9K_CUSTOM_GCERT='/usr/local/google/home/jsybrandt/.dotfiles/private/bin/gcert_status_bar.sh'
-  POWERLEVEL9K_CUSTOM_GCERT_BACKGROUND="green"
+  # POWERLEVEL9K_CUSTOM_GCERT='/usr/local/google/home/jsybrandt/.dotfiles/private/bin/gcert_status_bar.sh'
+  # POWERLEVEL9K_CUSTOM_GCERT_BACKGROUND="green"
 
-  function prompt_gcert() {
+  function prompt_gcert_good() {
     GCERT_RESULT=$(gcertstatus --nocheck_ssh --format=statusbar 2> /dev/null)
     if [ $? -eq 0 ]; then
-      p10k segment -b "green" -t "gcert ($GCERT_RESULT)"
-    else
-      p10k segment -b "red" -t 'gcert'
+      p10k segment -b "green" -f "white" -t "%Bgcert%b ($GCERT_RESULT)"
+    fi
+  }
+
+  function prompt_gcert_bad() {
+    GCERT_RESULT=$(gcertstatus --nocheck_ssh --format=statusbar 2> /dev/null)
+    if [ $? -ne 0 ]; then
+      p10k segment -b "red" -f "white" -t "%Bgcert%b"
+    fi
+  }
+
+  ###########################[ citc-aware dir ]#################################
+  function prompt_citc() {
+    # Get the current citc dir
+    CITC_ROOT=$(echo "$PWD" | grep -oE "^/google/src/cloud/$USER/[^/]+")
+    if [ $? -eq 0 ]; then
+      CITC_NAME=$(basename $CITC_ROOT)
+      p10k segment -b "green" -f "white" -t "%B$CITC_NAME%b"
     fi
   }
 

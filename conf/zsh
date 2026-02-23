@@ -62,3 +62,4 @@ alias weather="curl wttr.in/Rockville"
 autoload -U compinit; compinit
 # Sometimes I fuck up mercurial.
 alias gh="hg"
+alias tmux-new="tmux new-session -s"
